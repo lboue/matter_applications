@@ -21,9 +21,14 @@ The project does this by utilizing a Sparkfun Weather Meter Kit, which measures 
 - Silicon Labs Matter Extension v2.2.0-1.2
 - Third Party Hardware Drivers Extension v1.11.0
 
+## Home Assistant version ##
+
+-  Home Assistant core: 2024.6.1
+-  Python Matter Server 6.1.0
+
 ## Hardware Required ##
 
-- One Raspberry Pi 4 running [Home Assistant OS](https://www.home-assistant.io/installation/raspberrypi) (2024.2.0 is used at the time of writing) 
+- One Raspberry Pi 4 running [Home Assistant OS](https://www.home-assistant.io/installation/raspberrypi) (2024.6.1 is used at the time of writing) 
 - One Google Nest Hub (or any relevant OpenThread Border Router capable Matter Hub)
 - One Android smartphone with both Google Home and Home Assistant applications installed
 - [One xG24-Explorer Kit (BRD2703A)](https://www.silabs.com/development-tools/wireless/efr32xg24-explorer-kit?tab=overview) or any other board capable of running **Matter - SoC Sensor over Thread**
@@ -55,7 +60,8 @@ docker exec -it <CONTAINER ID> bash
 apk update
 apk add nano
 ```
-- add to: /usr/local/lib/python3.12/site-packages/matter_server/client/models/clusters.py: (using the command **nano /usr/local/lib/python3.12/site-packages/matter_server/client/models/clusters.py**)
+
+- add to: /usr/local/lib/python3.12/site-packages/matter_server/common/custom_clusters.py: (using the command **nano /usr/local/lib/python3.12/site-packages/matter_server/common/custom_clusters.py**)
 ```py
 @dataclass
 class WeatherStationCluster(Cluster):
