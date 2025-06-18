@@ -55,7 +55,7 @@ docker exec -it <CONTAINER ID> bash
 apk update
 apk add nano
 ```
-- add to: /usr/local/lib/python3.12/site-packages/matter_server/client/models/clusters.py: (using the command **nano /usr/local/lib/python3.12/site-packages/matter_server/client/models/clusters.py**)
+- add to: /usr/local/lib/python3.13/site-packages/matter_server/common/custom_clusters.py: (using the command **nano /usr/local/lib/python3.12/site-packages/matter_server/client/models/clusters.py**)
 ```py
 @dataclass
 class WeatherStationCluster(Cluster):
@@ -134,12 +134,14 @@ class WeatherStationCluster(Cluster):
                 return ClusterObjectFieldDescriptor(Type=float32)
 
             value: float32 = 0
+
 ```
 - (save and exit using Ctrl+S and Ctrl+X)
 - add to: /usr/src/homeassistant/homeassistant/components/matter/sensor.py
 ```py
-from matter_server.client.models.clusters import WeatherStationCluster
-```
+from matter_server.common.custom_clusters import (
+    WeatherStationCluster,
+)```
 - to the imports of the same file:
 
 ```py
@@ -152,7 +154,6 @@ from homeassistant.const import (
 ```
 - to discovery schemas in the same file:
 ```py
-
     MatterDiscoverySchema(
         platform=Platform.SENSOR,
         entity_description=MatterSensorEntityDescription(
@@ -164,7 +165,6 @@ from homeassistant.const import (
         ),
         entity_class=MatterSensor,
         required_attributes=(WeatherStationCluster.Attributes.WindSpeed,),
-        should_poll=True,
     ),
     MatterDiscoverySchema(
         platform=Platform.SENSOR,
@@ -177,7 +177,6 @@ from homeassistant.const import (
         ),
         entity_class=MatterSensor,
         required_attributes=(WeatherStationCluster.Attributes.WindDirection,),
-        should_poll=True,
     ),
     MatterDiscoverySchema(
         platform=Platform.SENSOR,
@@ -190,7 +189,6 @@ from homeassistant.const import (
         ),
         entity_class=MatterSensor,
         required_attributes=(WeatherStationCluster.Attributes.Rainfall,),
-        should_poll=True,
     ),
 ```
 Exit the container bash instance with the **exit** command, and then restart the Home Assistant Core container with **docker restart \<CONTAINER ID\>**, and Home Assistant can now read and understand our custom cluster.
