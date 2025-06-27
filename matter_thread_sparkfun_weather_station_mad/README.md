@@ -55,7 +55,7 @@ docker exec -it <CONTAINER ID> bash
 apk update
 apk add nano
 ```
-- add to: /usr/local/lib/python3.13/site-packages/matter_server/common/custom_clusters.py: (using the command **nano /usr/local/lib/python3.12/site-packages/matter_server/client/models/clusters.py**)
+- add to: /usr/local/lib/python3.12/site-packages/matter_server/common/custom_clusters.py : (using the command **nano  /usr/local/lib/python3.12/site-packages/matter_server/common/custom_clusters.py **)
 ```py
 @dataclass
 class WeatherStationCluster(Cluster):
